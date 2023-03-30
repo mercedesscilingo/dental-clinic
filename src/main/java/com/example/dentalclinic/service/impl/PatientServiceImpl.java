@@ -3,7 +3,6 @@ package com.example.dentalclinic.service.impl;
 import com.example.dentalclinic.entity.Patient;
 import com.example.dentalclinic.repository.PatientRepository;
 import com.example.dentalclinic.service.PatientService;
-import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

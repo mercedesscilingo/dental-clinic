@@ -1,4 +1,13 @@
 package com.example.dentalclinic.controller.dto;
 
-public record DentistDto(String name, String lastName, String license) {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class DentistDto {
+    private Long id;
+    private String name;
+    private String lastname;
+    private String license;
 }

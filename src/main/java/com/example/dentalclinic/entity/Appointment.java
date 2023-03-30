@@ -1,7 +1,9 @@
 package com.example.dentalclinic.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -9,15 +11,17 @@ import java.time.LocalDate;
 @Entity(name = "appointments")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL) //todo ver relaciones
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private Patient patient;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
 

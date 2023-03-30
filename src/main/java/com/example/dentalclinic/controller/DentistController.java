@@ -1,8 +1,12 @@
 package com.example.dentalclinic.controller;
 
+import com.example.dentalclinic.controller.dto.DentistDto;
+import com.example.dentalclinic.controller.dto.Mappers;
 import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.service.DentistService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +21,20 @@ import java.util.Optional;
 public class DentistController {
 
     private final DentistService dentistService;
+    private final Mappers mapper;
+    private final ObjectMapper objectMapper;
 
     @PostMapping()
-    public ResponseEntity<Dentist> save(@RequestBody Dentist dentist) {
+    public ResponseEntity<DentistDto> save(@RequestBody DentistDto dentistDto) {
+        //Dentist dentist = objectMapper.convertValue(dentistDto, Dentist.class);
+        //DentistDto response = objectMapper.convertValue(dentistService.save(dentist), DentistDto.class);
 
-        return ResponseEntity.ok(dentistService.save(dentist));
+        Dentist dentist = mapper.toDentist(dentistDto);
+
+        DentistDto response = mapper.toDentistDto(dentistService.save(dentist));
+
+
+        return ResponseEntity.ok(response);
 
     }
 
@@ -62,11 +75,6 @@ public class DentistController {
 
         return response;
     }
-
-
-
-
-
 
 
 }

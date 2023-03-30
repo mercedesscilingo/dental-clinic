@@ -1,6 +1,7 @@
 package com.example.dentalclinic.controller;
 
 import com.example.dentalclinic.controller.dto.AppointmentDto;
+import com.example.dentalclinic.controller.dto.Mappers;
 import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.service.AppointmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,15 +21,16 @@ public class AppointmentController {
 
 
     private final AppointmentService appointmentService;
-
     private final ObjectMapper objectMapper;
+    private final Mappers mapper;
 
     @PostMapping()
     public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) { //TODO: ver validacion en el service (falta)
 
-        Appointment appointment = objectMapper.convertValue(appointmentDto, Appointment.class);
-
-        AppointmentDto response = objectMapper.convertValue(appointmentService.save(appointment), AppointmentDto.class);
+        //Appointment appointment = objectMapper.convertValue(appointmentDto, Appointment.class);
+        //AppointmentDto response = objectMapper.convertValue(appointmentService.save(appointment), AppointmentDto.class);
+        Appointment appointment = mapper.toAppointment(appointmentDto) ;
+        AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 

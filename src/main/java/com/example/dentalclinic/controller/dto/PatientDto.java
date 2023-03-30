@@ -1,6 +1,16 @@
 package com.example.dentalclinic.controller.dto;
+import com.example.dentalclinic.entity.Address;
+import lombok.Getter;
+import lombok.Setter;
 
-public record PatientDto(String name, String lastname, String document, AddressDto address) {
-    public record AddressDto(String street, String number, String town, String province){};
-
+import java.time.LocalDate;
+@Getter
+@Setter
+public class PatientDto {
+    private Long id;
+    private String name;
+    private String lastname;
+    private String document;
+    private LocalDate admissionDate;
+    private Address address;
 }

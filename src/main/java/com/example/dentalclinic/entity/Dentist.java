@@ -1,16 +1,19 @@
 package com.example.dentalclinic.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity(name = "dentists")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dentist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +21,9 @@ public class Dentist {
     private String name;
     private String lastname;
     private String license;
+
+    @OneToMany(mappedBy = "dentist", fetch = FetchType.LAZY)
+    private Set<Appointment> appointments;
 
 
 }
