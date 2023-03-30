@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AppointmentService {
     Appointment save(Appointment appointment);
-    Optional<Appointment> findById(Long id);
+    Appointment findById(Long id);
     List<Appointment> findAll();
     Appointment update(Appointment appointment);
     void delete(Long id);

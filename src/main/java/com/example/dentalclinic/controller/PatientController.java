@@ -11,9 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -23,7 +22,7 @@ public class PatientController {
 
 
     private final PatientService patientService;
-    private final ObjectMapper objectMapper;
+
     private final Mappers mapper;
 
     @PostMapping()
@@ -39,43 +38,42 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Patient>> findById(@PathVariable String id) {
+    public ResponseEntity<PatientDto> findById(@PathVariable Long id) {
 
-        return ResponseEntity.ok(patientService.findById(Long.parseLong(id)));
+        PatientDto response = mapper.toPatientDto(patientService.findById(id));
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping
-    public ResponseEntity<List<Patient>> findAll(){
-        List<Patient> patients= patientService.findAll();
-        System.out.println(patients.toString());
-        return ResponseEntity.ok(patients);
+    public ResponseEntity<List<PatientDto>> findAll(){
+
+        return ResponseEntity.ok(patientService.findAll().stream().map(patient -> mapper.toPatientDto(patient)).toList());
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Patient>> update(@RequestBody Patient patient,@NonNull @PathVariable Long id) {
+    public ResponseEntity<PatientDto> update(@RequestBody PatientDto patientDto,@NonNull @PathVariable Long id) {
 
-        ResponseEntity<Optional<Patient>> response = null;
+        Patient patient = mapper.toPatient(patientDto);
 
-        if (patientService.findById(id) != null)
-            response = ResponseEntity.ok(patientService.update(patient));
-        else
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        try{
+            return ResponseEntity.ok(mapper.toPatientDto(patientService.update(patient)));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
-        return response;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        ResponseEntity<String> response = null;
 
-        if (patientService.findById(id) != null) {
-            patientService.delete(id);
-            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient has been removed");
-        } else {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        patientService.delete(id);
 
-        return response;
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient has been removed");
     }
+
 
 }

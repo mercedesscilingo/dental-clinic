@@ -4,7 +4,6 @@ import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.entity.Patient;
 
-import java.util.Collections;
 
 public class Mappers {
 
@@ -18,6 +17,7 @@ public class Mappers {
         patientDto.setDocument(patientDto.getDocument());
         patientDto.setAdmissionDate(patient.getAdmissionDate());
         patientDto.setAddress(patientDto.getAddress());
+        patientDto.setAppointments(patient.getAppointments());
 
         return patientDto;
 
@@ -33,6 +33,7 @@ public class Mappers {
         patient.setDocument(patientDto.getDocument());
         patient.setAdmissionDate(patientDto.getAdmissionDate());
         patient.setAddress(patientDto.getAddress());
+        patient.setAppointments(patientDto.getAppointments());
 
         return patient;
     }
@@ -46,6 +47,7 @@ public class Mappers {
         dentistDto.setName(dentist.getName());
         dentistDto.setLastname(dentist.getLastname());
         dentistDto.setLicense(dentist.getLicense());
+        dentistDto.setAppointments(dentist.getAppointments());
 
         return dentistDto;
     }
@@ -58,6 +60,7 @@ public class Mappers {
         dentist.setName(dentistDto.getName());
         dentist.setLastname(dentistDto.getLastname());
         dentist.setLicense(dentistDto.getLicense());
+        dentist.setAppointments(dentistDto.getAppointments());
 
         return dentist;
     }

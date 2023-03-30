@@ -4,7 +4,7 @@ import com.example.dentalclinic.controller.dto.DentistDto;
 import com.example.dentalclinic.controller.dto.Mappers;
 import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.service.DentistService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,10 @@ public class DentistController {
 
     private final DentistService dentistService;
     private final Mappers mapper;
-    private final ObjectMapper objectMapper;
+
 
     @PostMapping()
     public ResponseEntity<DentistDto> save(@RequestBody DentistDto dentistDto) {
-        //Dentist dentist = objectMapper.convertValue(dentistDto, Dentist.class);
-        //DentistDto response = objectMapper.convertValue(dentistService.save(dentist), DentistDto.class);
 
         Dentist dentist = mapper.toDentist(dentistDto);
 
@@ -39,41 +37,39 @@ public class DentistController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Dentist>> findById(@PathVariable(name = "id") String id) {
+    public ResponseEntity<DentistDto> findById(@PathVariable(name = "id") String id) {
 
-        return ResponseEntity.ok(dentistService.findById(Long.parseLong(id)));
+        DentistDto response = mapper.toDentistDto(dentistService.findById(Long.parseLong(id)));
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<Dentist>> findAll(){
-        return ResponseEntity.ok(dentistService.findAll());
+    public ResponseEntity<List<DentistDto>> findAll(){
+
+        return ResponseEntity.ok(dentistService.findAll().stream().map(dentist -> mapper.toDentistDto(dentist)).toList());
     }
 
     @PutMapping()
-    public ResponseEntity<Optional<Dentist>> update(@RequestBody Dentist dentist) {
+    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto) {
 
-        ResponseEntity<Optional<Dentist>> response = null;
+        Dentist dentist = mapper.toDentist(dentistDto);
+        try{
+            return ResponseEntity.ok(mapper.toDentistDto(dentistService.update(dentist)));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
-        if (dentist.getId() != null && dentistService.findById(dentist.getId()) != null)
-            response = ResponseEntity.ok(dentistService.update(dentist));
-        else
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        return response;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        ResponseEntity<String> response = null;
 
-        if (dentistService.findById(id) != null) {
-            dentistService.delete(id);
-            response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("The dentist has been removed");
-        } else {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        dentistService.delete(id);
 
-        return response;
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The dentist has been removed");
+
     }
 
 

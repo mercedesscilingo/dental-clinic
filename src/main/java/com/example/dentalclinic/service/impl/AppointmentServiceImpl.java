@@ -25,8 +25,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Optional<Appointment> findById(Long id) {
-        return appointmentRepository.findById(id);
+    public Appointment findById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -46,10 +46,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public void delete(Long id) {
-
-        if (id != null)
             appointmentRepository.deleteById(id);
-        else
-            throw new RuntimeException();
     }
 }

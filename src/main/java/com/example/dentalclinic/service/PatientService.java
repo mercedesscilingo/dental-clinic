@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface PatientService {
     Patient save(Patient patient);
-    Optional<Patient> findById(Long id);
+    Patient findById(Long id);
     List<Patient> findAll();
-    Optional<Patient> update(Patient patient);
+    Patient update(Patient patient);
     void delete(Long id);
 }

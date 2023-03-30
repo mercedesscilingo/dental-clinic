@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface DentistService {
 
     Dentist save(Dentist dentist);
-    Optional<Dentist> findById(Long id);
+    Dentist findById(Long id);
     List<Dentist> findAll();
-    Optional<Dentist> update(Dentist dentist);
+    Dentist update(Dentist dentist);
     void delete(Long id);
 
 }

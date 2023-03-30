@@ -25,7 +25,6 @@ public class Patient {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
-
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private Set<Appointment> appointments;
 

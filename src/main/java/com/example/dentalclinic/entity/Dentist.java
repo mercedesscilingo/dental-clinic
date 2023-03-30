@@ -21,7 +21,6 @@ public class Dentist {
     private String name;
     private String lastname;
     private String license;
-
     @OneToMany(mappedBy = "dentist", fetch = FetchType.LAZY)
     private Set<Appointment> appointments;
 

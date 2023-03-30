@@ -23,8 +23,8 @@ public class DentistServiceImpl implements DentistService {
     }
 
     @Override
-    public Optional<Dentist> findById(Long id) {
-        return dentistRepository.findById(id);
+    public Dentist findById(Long id) {
+        return dentistRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -33,8 +33,13 @@ public class DentistServiceImpl implements DentistService {
     }
 
     @Override
-    public Optional<Dentist> update(Dentist dentist) {
-        return Optional.of(dentistRepository.save(dentist));
+    public Dentist update(Dentist dentist) throws RuntimeException{
+
+        if (dentist.getId() != null && dentistRepository.existsById(dentist.getId()))
+            return dentistRepository.save(dentist);
+        else
+            throw new RuntimeException();
+
     }
 
     @Override

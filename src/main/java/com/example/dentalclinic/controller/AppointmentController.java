@@ -4,14 +4,13 @@ import com.example.dentalclinic.controller.dto.AppointmentDto;
 import com.example.dentalclinic.controller.dto.Mappers;
 import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.service.AppointmentService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,14 +20,12 @@ public class AppointmentController {
 
 
     private final AppointmentService appointmentService;
-    private final ObjectMapper objectMapper;
+
     private final Mappers mapper;
 
     @PostMapping()
     public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) { //TODO: ver validacion en el service (falta)
 
-        //Appointment appointment = objectMapper.convertValue(appointmentDto, Appointment.class);
-        //AppointmentDto response = objectMapper.convertValue(appointmentService.save(appointment), AppointmentDto.class);
         Appointment appointment = mapper.toAppointment(appointmentDto) ;
         AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment));
 
@@ -37,27 +34,26 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<AppointmentDto>> findById(@PathVariable(name = "id") String id) {
+    public ResponseEntity<AppointmentDto> findById(@PathVariable(name = "id") Long id) {
 
-        AppointmentDto response = objectMapper.convertValue(appointmentService.findById(Long.parseLong(id)), AppointmentDto.class);
+        AppointmentDto response = mapper.toAppointmentDto(appointmentService.findById(id));
 
-        return ResponseEntity.ok(Optional.ofNullable(response)); //Todo: ver optional
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
     public ResponseEntity<List<AppointmentDto>> findAll(){
-        return ResponseEntity.ok(appointmentService.findAll().stream()
-                .map(a -> objectMapper.convertValue(a, AppointmentDto.class)).toList());
+        return ResponseEntity.ok(appointmentService.findAll().stream().map(a -> mapper.toAppointmentDto(a)).toList());
     }
 
     @PutMapping()
     public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto) {
 
-        Appointment appointment = objectMapper.convertValue(appointmentDto, Appointment.class);
+        Appointment appointment = mapper.toAppointment(appointmentDto);
 
         try{
 
-            return ResponseEntity.ok(objectMapper.convertValue(appointmentService.update(appointment), AppointmentDto.class));
+            return ResponseEntity.ok(mapper.toAppointmentDto(appointmentService.update(appointment)));
 
         }
         catch(Exception e){

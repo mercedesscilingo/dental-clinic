@@ -22,8 +22,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Optional<Patient> findById(Long id) {
-        return patientRepository.findById(id);
+    public Patient findById(Long id) {
+        return patientRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -32,11 +32,17 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Optional<Patient> update(Patient patient) {
-        return Optional.of(patientRepository.save(patient));
+    public Patient update(Patient patient) throws RuntimeException {
+
+        if (patient.getId() != null && patientRepository.existsById(patient.getId()))
+            return patientRepository.save(patient);
+        else
+            throw new RuntimeException();
     }
 
     @Override
     public void delete(Long id) {patientRepository.deleteById(id);
     }
+
+
 }

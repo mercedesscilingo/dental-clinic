@@ -13,7 +13,6 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
-    @JsonIgnore
     private Long id;
     private String street;
     private String number;
