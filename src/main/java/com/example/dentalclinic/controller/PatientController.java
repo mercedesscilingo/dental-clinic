@@ -1,10 +1,9 @@
 package com.example.dentalclinic.controller;
 
-import com.example.dentalclinic.controller.dto.Mappers;
+import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.controller.dto.PatientDto;
 import com.example.dentalclinic.entity.Patient;
 import com.example.dentalclinic.service.PatientService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +22,10 @@ public class PatientController {
 
     private final PatientService patientService;
 
-    private final Mappers mapper;
+    private final Mapper mapper;
 
     @PostMapping()
     public ResponseEntity<PatientDto> save(@RequestBody PatientDto patientDto) {
-
-        //Patient patient = objectMapper.convertValue(patientDto, Patient.class);
-        //PatientDto response = objectMapper.convertValue(patientService.save(patient), PatientDto.class);
 
         Patient patient = mapper.toPatient(patientDto);
         PatientDto response = mapper.toPatientDto(patientService.save(patient));

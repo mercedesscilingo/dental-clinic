@@ -1,5 +1,6 @@
 package com.example.dentalclinic.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Patient {
     @JoinColumn(name = "address_id")
     private Address address;
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Appointment> appointments;
 
 }

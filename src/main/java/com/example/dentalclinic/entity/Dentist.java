@@ -1,6 +1,7 @@
 package com.example.dentalclinic.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Dentist {
     private String lastname;
     private String license;
     @OneToMany(mappedBy = "dentist", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Appointment> appointments;
 
 

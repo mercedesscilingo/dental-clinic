@@ -1,7 +1,7 @@
 package com.example.dentalclinic.controller;
 
 import com.example.dentalclinic.controller.dto.DentistDto;
-import com.example.dentalclinic.controller.dto.Mappers;
+import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.service.DentistService;
 
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -21,7 +20,7 @@ import java.util.Optional;
 public class DentistController {
 
     private final DentistService dentistService;
-    private final Mappers mapper;
+    private final Mapper mapper;
 
 
     @PostMapping()

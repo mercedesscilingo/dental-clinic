@@ -1,7 +1,7 @@
 package com.example.dentalclinic.controller;
 
 import com.example.dentalclinic.controller.dto.AppointmentDto;
-import com.example.dentalclinic.controller.dto.Mappers;
+import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppointmentController {
 
-
     private final AppointmentService appointmentService;
 
-    private final Mappers mapper;
+    private final Mapper mapper;
 
     @PostMapping()
     public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) { //TODO: ver validacion en el service (falta)
 
+
         Appointment appointment = mapper.toAppointment(appointmentDto) ;
+
         AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

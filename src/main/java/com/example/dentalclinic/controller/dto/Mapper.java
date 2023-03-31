@@ -5,7 +5,7 @@ import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.entity.Patient;
 
 
-public class Mappers {
+public class Mapper {
 
     public PatientDto toPatientDto (Patient patient){
 
