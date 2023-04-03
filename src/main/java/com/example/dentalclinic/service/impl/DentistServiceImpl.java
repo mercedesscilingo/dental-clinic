@@ -1,6 +1,7 @@
 package com.example.dentalclinic.service.impl;
 
 import com.example.dentalclinic.entity.Dentist;
+import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.repository.DentistRepository;
 import com.example.dentalclinic.service.DentistService;
 import lombok.RequiredArgsConstructor;
@@ -33,17 +34,23 @@ public class DentistServiceImpl implements DentistService {
     }
 
     @Override
-    public Dentist update(Dentist dentist) throws RuntimeException{
+    public Dentist update(Dentist dentist) throws ResourceNotFoundException {
 
         if (dentist.getId() != null && dentistRepository.existsById(dentist.getId()))
             return dentistRepository.save(dentist);
         else
-            throw new RuntimeException();
+            throw new ResourceNotFoundException("There is no dentist with id " + dentist.getId());
 
     }
 
     @Override
-    public void delete(Long id) {
-        dentistRepository.deleteById(id);
+    public void delete(Long id) throws ResourceNotFoundException {
+        if(dentistRepository.findById(id).isPresent())
+            dentistRepository.deleteById(id);
+        else
+            throw new ResourceNotFoundException("There is no dentist with id " + id);
+
+        /*if(findById(id) == null)
+            throw new ResourceNotFoundException("There is no dentist with id " + id); */ //TODO: elegir una resolución
     }
 }

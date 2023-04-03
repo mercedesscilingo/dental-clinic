@@ -3,7 +3,11 @@ package com.example.dentalclinic.controller;
 import com.example.dentalclinic.controller.dto.AppointmentDto;
 import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.entity.Appointment;
+import com.example.dentalclinic.exceptions.BadRequestException;
+import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.service.AppointmentService;
+import com.example.dentalclinic.service.DentistService;
+import com.example.dentalclinic.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +27,11 @@ public class AppointmentController {
     private final Mapper mapper;
 
     @PostMapping()
-    public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) { //TODO: ver validacion en el service (falta)
-
+    public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) throws BadRequestException {
 
         Appointment appointment = mapper.toAppointment(appointmentDto) ;
 
-        AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment));
+        AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment)); //TODO: ver exception especifica para bad request
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
@@ -48,23 +51,16 @@ public class AppointmentController {
     }
 
     @PutMapping()
-    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto) {
+    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto) throws ResourceNotFoundException {
 
         Appointment appointment = mapper.toAppointment(appointmentDto);
 
-        try{
-
-            return ResponseEntity.ok(mapper.toAppointmentDto(appointmentService.update(appointment)));
-
-        }
-        catch(Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return ResponseEntity.ok(mapper.toAppointmentDto(appointmentService.update(appointment)));
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) throws ResourceNotFoundException {
 
         appointmentService.delete(id);
 

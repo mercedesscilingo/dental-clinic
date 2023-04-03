@@ -1,14 +1,18 @@
 package com.example.dentalclinic.service.impl;
 
 import com.example.dentalclinic.entity.Patient;
+import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.repository.PatientRepository;
 import com.example.dentalclinic.service.PatientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -32,16 +36,19 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient update(Patient patient) throws RuntimeException {
+    public Patient update(Patient patient) throws ResourceNotFoundException {
 
         if (patient.getId() != null && patientRepository.existsById(patient.getId()))
             return patientRepository.save(patient);
         else
-            throw new RuntimeException();
+            throw new ResourceNotFoundException("There is no patient with id " + patient.getId());
     }
 
     @Override
-    public void delete(Long id) {patientRepository.deleteById(id);
+    public void delete(Long id) throws ResourceNotFoundException{
+        if(findById(id) == null)
+            throw new ResourceNotFoundException("There is no patient with id " + id);
+        patientRepository.deleteById(id);
     }
 
 

@@ -3,6 +3,7 @@ package com.example.dentalclinic.controller;
 import com.example.dentalclinic.controller.dto.DentistDto;
 import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.entity.Dentist;
+import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.service.DentistService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class DentistController {
         DentistDto response = mapper.toDentistDto(dentistService.save(dentist));
 
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
 
@@ -50,20 +51,15 @@ public class DentistController {
     }
 
     @PutMapping()
-    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto) {
+    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto) throws ResourceNotFoundException {
 
         Dentist dentist = mapper.toDentist(dentistDto);
-        try{
-            return ResponseEntity.ok(mapper.toDentistDto(dentistService.update(dentist)));
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
 
+        return ResponseEntity.ok(mapper.toDentistDto(dentistService.update(dentist)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException{
 
         dentistService.delete(id);
 

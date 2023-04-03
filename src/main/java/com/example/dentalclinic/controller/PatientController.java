@@ -3,6 +3,7 @@ package com.example.dentalclinic.controller;
 import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.controller.dto.PatientDto;
 import com.example.dentalclinic.entity.Patient;
+import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class PatientController {
         Patient patient = mapper.toPatient(patientDto);
         PatientDto response = mapper.toPatientDto(patientService.save(patient));
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
@@ -50,26 +51,23 @@ public class PatientController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDto> update(@RequestBody PatientDto patientDto,@NonNull @PathVariable Long id) {
+    public ResponseEntity<PatientDto> update(@RequestBody PatientDto patientDto,@NonNull @PathVariable Long id) throws ResourceNotFoundException {
 
         Patient patient = mapper.toPatient(patientDto);
 
-        try{
-            return ResponseEntity.ok(mapper.toPatientDto(patientService.update(patient)));
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return ResponseEntity.ok(mapper.toPatientDto(patientService.update(patient)));
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException{
 
         patientService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient has been removed");
     }
+
+
 
 
 }
