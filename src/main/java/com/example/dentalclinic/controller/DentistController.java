@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,8 +51,8 @@ public class DentistController {
         return ResponseEntity.ok(dentistService.findAll().stream().map(dentist -> mapper.toDentistDto(dentist)).toList());
     }
 
-    @PutMapping()
-    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto) throws ResourceNotFoundException {
+    @PutMapping("/{id}")
+    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto) {
 
         Dentist dentist = mapper.toDentist(dentistDto);
 
@@ -59,7 +60,7 @@ public class DentistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException{
+    public ResponseEntity<String> delete(@PathVariable Long id) { //TODO: remover?
 
         dentistService.delete(id);
 

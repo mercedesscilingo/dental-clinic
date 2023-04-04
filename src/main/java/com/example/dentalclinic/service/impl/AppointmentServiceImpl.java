@@ -25,7 +25,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
     @Override
-    public Appointment save(Appointment appointment) throws BadRequestException { //TODO: chequear
+    public Appointment save(Appointment appointment) { //TODO: chequear
 
         if(patientRepository.findById(appointment.getPatient().getId()).isPresent() &&
                 dentistRepository.findById(appointment.getDentist().getId()).isPresent()){
@@ -47,18 +47,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Appointment update(Appointment appointment) throws ResourceNotFoundException {
+    public Appointment update(Appointment appointment){
 
         if (appointment.getId() != null && appointmentRepository.existsById(appointment.getId()))
             return appointmentRepository.save(appointment);
         else
-            throw new ResourceNotFoundException("There is no appointment with id " + appointment.getId());
+            throw new ResourceNotFoundException("There is no appointment with id " + appointment.getId()); //TODO: hay que cambiar esta linea?
     }
 
     @Override
-    public void delete(Long id) throws ResourceNotFoundException {
-        if(findById(id) == null)
-            throw new ResourceNotFoundException("There is no dentist with id " + id);
+    public void delete(Long id) {
         appointmentRepository.deleteById(id);
     }
 }

@@ -10,6 +10,6 @@ public interface PatientService {
     Patient save(Patient patient);
     Patient findById(Long id);
     List<Patient> findAll();
-    Patient update(Patient patient) throws ResourceNotFoundException;
-    void delete(Long id) throws ResourceNotFoundException;
+    Patient update(Patient patient);
+    void delete(Long id);
 }

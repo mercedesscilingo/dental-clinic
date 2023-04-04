@@ -34,23 +34,17 @@ public class DentistServiceImpl implements DentistService {
     }
 
     @Override
-    public Dentist update(Dentist dentist) throws ResourceNotFoundException {
+    public Dentist update(Dentist dentist){
 
         if (dentist.getId() != null && dentistRepository.existsById(dentist.getId()))
             return dentistRepository.save(dentist);
         else
-            throw new ResourceNotFoundException("There is no dentist with id " + dentist.getId());
+            throw new ResourceNotFoundException("There is no dentist with id " + dentist.getId()); //TODO: hay que cambiar esta linea?
 
     }
 
     @Override
     public void delete(Long id) throws ResourceNotFoundException {
-        if(dentistRepository.findById(id).isPresent())
             dentistRepository.deleteById(id);
-        else
-            throw new ResourceNotFoundException("There is no dentist with id " + id);
-
-        /*if(findById(id) == null)
-            throw new ResourceNotFoundException("There is no dentist with id " + id); */ //TODO: elegir una resolución
     }
 }

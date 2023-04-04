@@ -8,9 +8,9 @@ import java.util.List;
 
 
 public interface AppointmentService {
-    Appointment save(Appointment appointment) throws RuntimeException, BadRequestException;
+    Appointment save(Appointment appointment);
     Appointment findById(Long id);
     List<Appointment> findAll();
-    Appointment update(Appointment appointment) throws ResourceNotFoundException;
-    void delete(Long id) throws ResourceNotFoundException;
+    Appointment update(Appointment appointment);
+    void delete(Long id);
 }

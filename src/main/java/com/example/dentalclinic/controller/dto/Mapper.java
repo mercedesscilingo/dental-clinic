@@ -12,11 +12,11 @@ public class Mapper {
         PatientDto patientDto = new PatientDto();
 
         patientDto.setId(patient.getId());
-        patientDto.setName(patientDto.getName());
-        patientDto.setLastname(patientDto.getLastname());
-        patientDto.setDocument(patientDto.getDocument());
+        patientDto.setName(patient.getName());
+        patientDto.setLastname(patient.getLastname());
+        patientDto.setDocument(patient.getDocument());
         patientDto.setAdmissionDate(patient.getAdmissionDate());
-        patientDto.setAddress(patientDto.getAddress());
+        patientDto.setAddress(patient.getAddress());
         patientDto.setAppointments(patient.getAppointments());
 
         return patientDto;

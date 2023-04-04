@@ -38,9 +38,9 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentDto> findById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<AppointmentDto> findById(@PathVariable(name = "id") String id) {
 
-        AppointmentDto response = mapper.toAppointmentDto(appointmentService.findById(id));
+        AppointmentDto response = mapper.toAppointmentDto(appointmentService.findById(Long.parseLong(id)));
 
         return ResponseEntity.ok(response);
     }
@@ -50,8 +50,8 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.findAll().stream().map(a -> mapper.toAppointmentDto(a)).toList());
     }
 
-    @PutMapping()
-    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto) throws ResourceNotFoundException {
+    @PutMapping("/{id}")
+    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto) {
 
         Appointment appointment = mapper.toAppointment(appointmentDto);
 
@@ -60,7 +60,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<String> delete(@PathVariable Long id) { //TODO: remover exception? aca tb paso string id y parseo? este metodo debe ser void?
 
         appointmentService.delete(id);
 

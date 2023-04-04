@@ -36,18 +36,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient update(Patient patient) throws ResourceNotFoundException {
+    public Patient update(Patient patient) {
 
         if (patient.getId() != null && patientRepository.existsById(patient.getId()))
             return patientRepository.save(patient);
         else
-            throw new ResourceNotFoundException("There is no patient with id " + patient.getId());
+            throw new ResourceNotFoundException("There is no patient with id " + patient.getId()); //TODO: hay que cambiar esta linea?
     }
 
     @Override
-    public void delete(Long id) throws ResourceNotFoundException{
-        if(findById(id) == null)
-            throw new ResourceNotFoundException("There is no patient with id " + id);
+    public void delete(Long id) {
         patientRepository.deleteById(id);
     }
 
