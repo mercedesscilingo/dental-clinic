@@ -6,6 +6,7 @@ import com.example.dentalclinic.repository.DentistRepository;
 import com.example.dentalclinic.service.DentistService;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DentistServiceImpl implements DentistService {
 
     private final DentistRepository dentistRepository;
@@ -20,6 +22,7 @@ public class DentistServiceImpl implements DentistService {
 
     @Override
     public Dentist save(Dentist dentist) {
+        log.info("Saving dentist");
         return dentistRepository.save(dentist);
     }
 
@@ -44,7 +47,8 @@ public class DentistServiceImpl implements DentistService {
     }
 
     @Override
-    public void delete(Long id) throws ResourceNotFoundException {
-            dentistRepository.deleteById(id);
+    public void delete(Long id) {
+        log.info("Deleting dentist");
+        dentistRepository.deleteById(id);
     }
 }
