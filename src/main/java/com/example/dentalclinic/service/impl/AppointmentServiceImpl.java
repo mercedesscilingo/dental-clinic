@@ -31,6 +31,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         if(patientRepository.findById(appointment.getPatient().getId()).isPresent() &&
                 dentistRepository.findById(appointment.getDentist().getId()).isPresent()){
+
+            appointment.setPatient(patientRepository.getReferenceById(appointment.getPatient().getId()));
+            appointment.setDentist(dentistRepository.getReferenceById(appointment.getDentist().getId()));
+
             return appointmentRepository.save(appointment);
         }
         else
@@ -54,7 +58,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (appointment.getId() != null && appointmentRepository.existsById(appointment.getId()))
             return appointmentRepository.save(appointment);
         else
-            throw new ResourceNotFoundException("There is no appointment with id " + appointment.getId()); //TODO: hay que cambiar esta linea?
+            throw new ResourceNotFoundException("There is no appointment with id " + appointment.getId());
     }
 
     @Override

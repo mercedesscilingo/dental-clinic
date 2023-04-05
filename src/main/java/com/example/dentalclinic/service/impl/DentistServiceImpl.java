@@ -42,7 +42,7 @@ public class DentistServiceImpl implements DentistService {
         if (dentist.getId() != null && dentistRepository.existsById(dentist.getId()))
             return dentistRepository.save(dentist);
         else
-            throw new ResourceNotFoundException("There is no dentist with id " + dentist.getId()); //TODO: hay que cambiar esta linea?
+            throw new ResourceNotFoundException("There is no dentist with id " + dentist.getId());
 
     }
 

@@ -40,7 +40,7 @@ public class PatientController {
     @GetMapping("/{id}")
     public ResponseEntity<PatientDto> findById(@PathVariable String id) {
 
-        PatientDto response = mapper.toPatientDto(patientService.findById(Long.parseLong(id))); //TODO: verificar si es correcto el parseo
+        PatientDto response = mapper.toPatientDto(patientService.findById(Long.parseLong(id)));
 
         return ResponseEntity.ok(response);
     }
@@ -63,9 +63,9 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws ResourceNotFoundException{ //TODO: remover exception?
+    public ResponseEntity<String> delete(@PathVariable String id) throws ResourceNotFoundException{ //TODO: remover exception?
 
-        patientService.delete(id);
+        patientService.delete(Long.parseLong(id));
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient has been removed");
     }

@@ -6,12 +6,12 @@ window.addEventListener('load', function () {
 
     //Ante un submit del formulario se ejecutará la siguiente funcion
     formulario.addEventListener('submit', function (event) {
-
+        event.preventDefault();
        //creamos un JSON que tendrá los datos de un nuevo odontologo
         const formData = {
-            nombre: document.querySelector('#nombre').value,
-            apellido: document.querySelector('#apellido').value,
-            matricula: document.querySelector('#matricula').value,
+            name: document.querySelector('#nombre').value,
+            lastname: document.querySelector('#apellido').value,
+            license: document.querySelector('#matricula').value,
 
         };
         //invocamos utilizando la función fetch la API peliculas con el método POST que guardará

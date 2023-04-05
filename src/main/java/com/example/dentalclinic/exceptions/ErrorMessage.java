@@ -1,14 +1,14 @@
 package com.example.dentalclinic.exceptions;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
-@Getter
-@Setter
+@Data
 @Builder
 public class ErrorMessage {
 

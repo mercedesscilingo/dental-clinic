@@ -29,6 +29,8 @@ public class AppointmentController {
     @PostMapping()
     public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) throws BadRequestException {
 
+
+
         Appointment appointment = mapper.toAppointment(appointmentDto) ;
 
         AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment)); //TODO: ver exception especifica para bad request

@@ -22,7 +22,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient save(Patient patient) {
-        log.info("Saving patient");
+        log.debug("Saving patient");
         patient.setAdmissionDate(LocalDate.now());
         return patientRepository.save(patient);
     }
@@ -43,13 +43,12 @@ public class PatientServiceImpl implements PatientService {
         if (patient.getId() != null && patientRepository.existsById(patient.getId()))
             return patientRepository.save(patient);
         else
-            log.error("The id does not exist");
-            throw new ResourceNotFoundException("There is no patient with id " + patient.getId()); //TODO: hay que cambiar esta linea?
+            throw new ResourceNotFoundException("There is no patient with id " + patient.getId());
     }
 
     @Override
     public void delete(Long id) {
-        log.info("Deleting patient");
+        log.debug("Deleting patient");
         patientRepository.deleteById(id);
     }
 
