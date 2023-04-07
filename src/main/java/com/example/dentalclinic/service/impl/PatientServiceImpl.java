@@ -52,5 +52,8 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.deleteById(id);
     }
 
-
+    @Override
+    public Patient getReferenceById(Long id) {
+        return patientRepository.getReferenceById(id);
+    }
 }

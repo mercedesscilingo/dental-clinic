@@ -27,7 +27,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
     @Override
-    public Appointment save(Appointment appointment) { //TODO: chequear
+    public Appointment save(Appointment appointment) {
 
         if(patientRepository.findById(appointment.getPatient().getId()).isPresent() &&
                 dentistRepository.findById(appointment.getDentist().getId()).isPresent()){

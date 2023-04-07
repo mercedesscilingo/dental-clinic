@@ -15,7 +15,7 @@ public class PatientDto {
     private String name;
     private String lastname;
     private String document;
-    private LocalDate admissionDate;
+    private String admissionDate;
     private Address address;
     @JsonIgnore
     private Set<Appointment> appointments;

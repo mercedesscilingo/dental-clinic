@@ -1,16 +1,15 @@
 package com.example.dentalclinic.controller;
 
 import com.example.dentalclinic.controller.dto.AppointmentDto;
+import com.example.dentalclinic.controller.dto.AppointmentRegistrationDto;
 import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.exceptions.BadRequestException;
-import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.service.AppointmentService;
-import com.example.dentalclinic.service.DentistService;
-import com.example.dentalclinic.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +26,8 @@ public class AppointmentController {
     private final Mapper mapper;
 
     @PostMapping()
-    public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentDto appointmentDto) throws BadRequestException {
-
-
-
-        Appointment appointment = mapper.toAppointment(appointmentDto) ;
-
+    public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentRegistrationDto appointmentRegistrationDto) throws BadRequestException {
+        Appointment appointment = mapper.toAppointment(appointmentRegistrationDto) ;
         AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment)); //TODO: ver exception especifica para bad request
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -53,7 +48,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto) {
+    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto, @NonNull @PathVariable Long id) {
 
         Appointment appointment = mapper.toAppointment(appointmentDto);
 

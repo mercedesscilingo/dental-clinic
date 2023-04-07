@@ -1,6 +1,7 @@
 package com.example.dentalclinic.service.impl;
 
 import com.example.dentalclinic.entity.Dentist;
+import com.example.dentalclinic.exceptions.BadRequestException;
 import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.repository.DentistRepository;
 import com.example.dentalclinic.service.DentistService;
@@ -22,7 +23,7 @@ public class DentistServiceImpl implements DentistService {
 
     @Override
     public Dentist save(Dentist dentist) {
-        log.info("Saving dentist");
+        log.debug("Saving dentist");
         return dentistRepository.save(dentist);
     }
 
@@ -42,13 +43,17 @@ public class DentistServiceImpl implements DentistService {
         if (dentist.getId() != null && dentistRepository.existsById(dentist.getId()))
             return dentistRepository.save(dentist);
         else
-            throw new ResourceNotFoundException("There is no dentist with id " + dentist.getId());
-
+            throw new ResourceNotFoundException("The dentist does not exist");
     }
 
     @Override
     public void delete(Long id) {
         log.info("Deleting dentist");
         dentistRepository.deleteById(id);
+    }
+
+    @Override
+    public Dentist getReferenceById(Long id) {
+        return dentistRepository.getReferenceById(id);
     }
 }

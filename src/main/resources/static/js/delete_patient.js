@@ -1,6 +1,6 @@
 function deleteBy(id){
 
-    const url = '/dentist/'+ id;
+    const url = '/patient/'+ id;
 
     const settings = {
         method: 'DELETE'
@@ -12,6 +12,6 @@ function deleteBy(id){
     let row_id = "#tr_" + id;
 
     document.querySelector(row_id).remove();
-    document.querySelector("#div_odontologo_updating").style.display = "none";
+    document.querySelector("#div_patient_updating").style.display = "none";
 
 }

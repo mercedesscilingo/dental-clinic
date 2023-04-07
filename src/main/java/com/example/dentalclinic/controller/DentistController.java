@@ -52,7 +52,7 @@ public class DentistController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto) {
+    public ResponseEntity<DentistDto> update(@RequestBody DentistDto dentistDto, @NonNull @PathVariable Long id) {
 
         Dentist dentist = mapper.toDentist(dentistDto);
 
@@ -60,7 +60,7 @@ public class DentistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) { //TODO: remover?
+    public ResponseEntity<String> delete(@PathVariable Long id) {
 
         dentistService.delete(id);
 

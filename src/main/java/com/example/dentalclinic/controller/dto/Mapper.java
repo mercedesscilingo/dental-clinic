@@ -3,9 +3,21 @@ package com.example.dentalclinic.controller.dto;
 import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.entity.Patient;
+import com.example.dentalclinic.service.DentistService;
+import com.example.dentalclinic.service.PatientService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class Mapper {
+
+
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private DentistService dentistService;
 
     public PatientDto toPatientDto (Patient patient){
 
@@ -15,7 +27,7 @@ public class Mapper {
         patientDto.setName(patient.getName());
         patientDto.setLastname(patient.getLastname());
         patientDto.setDocument(patient.getDocument());
-        patientDto.setAdmissionDate(patient.getAdmissionDate());
+        patientDto.setAdmissionDate(patient.getAdmissionDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         patientDto.setAddress(patient.getAddress());
         patientDto.setAppointments(patient.getAppointments());
 
@@ -31,7 +43,6 @@ public class Mapper {
         patient.setName(patientDto.getName());
         patient.setLastname(patientDto.getLastname());
         patient.setDocument(patientDto.getDocument());
-        patient.setAdmissionDate(patientDto.getAdmissionDate());
         patient.setAddress(patientDto.getAddress());
         patient.setAppointments(patientDto.getAppointments());
 
@@ -85,6 +96,22 @@ public class Mapper {
         appointment.setDate(appointmentDto.getDate());
         appointment.setPatient(appointmentDto.getPatient());
         appointment.setDentist(appointmentDto.getDentist());
+
+        return appointment;
+    }
+
+    public Appointment toAppointment (AppointmentRegistrationDto appointmentDto){
+
+        Appointment appointment = new Appointment();
+
+        appointment.setId(appointmentDto.getId());
+        appointment.setDate(LocalDate.parse(appointmentDto.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+        Patient patient = patientService.getReferenceById(appointmentDto.getPatientId());
+        appointment.setPatient(patient);
+
+        Dentist dentist = dentistService.getReferenceById(appointmentDto.getDentistId());
+        appointment.setDentist(dentist);
 
         return appointment;
     }

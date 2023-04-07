@@ -6,10 +6,10 @@ import com.example.dentalclinic.entity.Patient;
 import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.service.PatientService;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,33 +28,30 @@ public class PatientController {
 
     @PostMapping()
     public ResponseEntity<PatientDto> save(@RequestBody PatientDto patientDto) {
-
         Patient patient = mapper.toPatient(patientDto);
-
         PatientDto response = mapper.toPatientDto(patientService.save(patient));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientDto> findById(@PathVariable String id) {
-
-        PatientDto response = mapper.toPatientDto(patientService.findById(Long.parseLong(id)));
-
+        Patient patient = patientService.findById(Long.parseLong(id));
+        PatientDto response = mapper.toPatientDto(patient);
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping
     public ResponseEntity<List<PatientDto>> findAll(){
-
-        return ResponseEntity.ok(patientService.findAll().stream().map(patient -> mapper.toPatientDto(patient)).toList());
+        List<Patient> patients = patientService.findAll();
+        List<PatientDto> patients_dto = patients.stream().map(patient -> mapper.toPatientDto(patient)).toList();
+        return ResponseEntity.ok(patients_dto);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDto> update(@RequestBody PatientDto patientDto,@NonNull @PathVariable Long id) {
+    public ResponseEntity<PatientDto> update(@RequestBody PatientDto patientDto, @NonNull @PathVariable Long id) {
 
         Patient patient = mapper.toPatient(patientDto);
 

@@ -1,6 +1,7 @@
 package com.example.dentalclinic.service;
 
 import com.example.dentalclinic.entity.Dentist;
+import com.example.dentalclinic.entity.Patient;
 import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface DentistService {
     List<Dentist> findAll();
     Dentist update(Dentist dentist);
     void delete(Long id);
+    Dentist getReferenceById(Long id);
 
 }
