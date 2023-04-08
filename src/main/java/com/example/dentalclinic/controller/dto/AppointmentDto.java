@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 public class AppointmentDto {
     private Long id;
-    private LocalDate date;
+    private String date;
     private Patient patient;
     private Dentist dentist;
 }

@@ -28,7 +28,7 @@ public class AppointmentController {
     @PostMapping()
     public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentRegistrationDto appointmentRegistrationDto) throws BadRequestException {
         Appointment appointment = mapper.toAppointment(appointmentRegistrationDto) ;
-        AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment)); //TODO: ver exception especifica para bad request
+        AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
@@ -48,9 +48,9 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentDto appointmentDto, @NonNull @PathVariable Long id) {
+    public ResponseEntity<AppointmentDto> update(@RequestBody AppointmentRegistrationDto appointmentRegistrationDto, @NonNull @PathVariable Long id) {
 
-        Appointment appointment = mapper.toAppointment(appointmentDto);
+        Appointment appointment = mapper.toAppointment(appointmentRegistrationDto);
 
         return ResponseEntity.ok(mapper.toAppointmentDto(appointmentService.update(appointment)));
 

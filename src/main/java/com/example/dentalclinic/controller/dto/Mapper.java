@@ -81,7 +81,7 @@ public class Mapper {
         AppointmentDto appointmentDto = new AppointmentDto();
 
         appointmentDto.setId(appointment.getId());
-        appointmentDto.setDate(appointment.getDate());
+        appointmentDto.setDate(appointment.getDate().toString());
         appointmentDto.setPatient(appointment.getPatient());
         appointmentDto.setDentist(appointment.getDentist());
 
@@ -93,7 +93,7 @@ public class Mapper {
         Appointment appointment = new Appointment();
 
         appointment.setId(appointmentDto.getId());
-        appointment.setDate(appointmentDto.getDate());
+        appointment.setDate(LocalDate.parse(appointmentDto.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         appointment.setPatient(appointmentDto.getPatient());
         appointment.setDentist(appointmentDto.getDentist());
 

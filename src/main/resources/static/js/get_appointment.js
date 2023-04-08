@@ -54,8 +54,8 @@ function getAppointments() {
 
         appointmentRow.innerHTML = '<td>' + updateButton + '</td>' +
                 '<td class=\"td_fecha\">' + formatDate(date) + '</td>' +
-                '<td class=\"td_patient\">' + appointment.patient.name +" " + appointment.patient.lastname+ '</td>' +
-                '<td class=\"td_dentist\">' + appointment.dentist.name + " " +appointment.dentist.lastname + '</td>' +
+                '<td class=\"td_patient\">' + appointment.patient.name.toUpperCase() +" " + appointment.patient.lastname.toUpperCase() + '</td>' +
+                '<td class=\"td_dentist\">' + appointment.dentist.name.toUpperCase() + " " +appointment.dentist.lastname.toUpperCase() + '</td>' +
                 '<td>' + deleteButton + '</td>';
 
     };
