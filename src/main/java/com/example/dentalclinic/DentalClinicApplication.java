@@ -12,11 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DentalClinicApplication {
 
 	public static void main(String[] args) {
-		ObjectMapper mapper = JsonMapper.builder() // or different mapper for other format
+		ObjectMapper mapper = JsonMapper.builder()
 				.addModule(new ParameterNamesModule())
 				.addModule(new Jdk8Module())
 				.addModule(new JavaTimeModule())
-				// and possibly other configuration, modules, then:
 				.build();
 		SpringApplication.run(DentalClinicApplication.class, args);
 	}

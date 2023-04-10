@@ -1,6 +1,7 @@
 package com.example.dentalclinic.service.impl;
 
 import com.example.dentalclinic.entity.Patient;
+import com.example.dentalclinic.exceptions.BadRequestException;
 import com.example.dentalclinic.exceptions.ResourceNotFoundException;
 import com.example.dentalclinic.repository.PatientRepository;
 import com.example.dentalclinic.service.PatientService;
@@ -22,14 +23,19 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient save(Patient patient) {
-        log.debug("Saving patient");
-        patient.setAdmissionDate(LocalDate.now());
-        return patientRepository.save(patient);
+        if (patient.getName() == null || patient.getLastname() == null || patient.getDocument() == null ) {
+            throw new BadRequestException("Error, patient name, lastname and document must be complete");
+        }
+        else {
+            log.debug("Saving patient");
+            patient.setAdmissionDate(LocalDate.now());
+            return patientRepository.save(patient);
+        }
     }
 
     @Override
     public Patient findById(Long id) {
-        return patientRepository.findById(id).orElse(null);
+        return patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient not found with id " + id));
     }
 
     @Override
@@ -52,8 +58,4 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.deleteById(id);
     }
 
-    @Override
-    public Patient getReferenceById(Long id) {
-        return patientRepository.getReferenceById(id);
-    }
 }

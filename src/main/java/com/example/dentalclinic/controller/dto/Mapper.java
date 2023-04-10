@@ -107,10 +107,10 @@ public class Mapper {
         appointment.setId(appointmentDto.getId());
         appointment.setDate(LocalDate.parse(appointmentDto.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-        Patient patient = patientService.getReferenceById(appointmentDto.getPatientId());
+        Patient patient = patientService.findById(appointmentDto.getPatientId());
         appointment.setPatient(patient);
 
-        Dentist dentist = dentistService.getReferenceById(appointmentDto.getDentistId());
+        Dentist dentist = dentistService.findById(appointmentDto.getDentistId());
         appointment.setDentist(dentist);
 
         return appointment;

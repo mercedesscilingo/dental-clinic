@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +23,18 @@ public class DentistServiceImpl implements DentistService {
 
     @Override
     public Dentist save(Dentist dentist) {
-        log.debug("Saving dentist");
-        return dentistRepository.save(dentist);
+        if(dentist.getName().isEmpty() || dentist.getLastname().isEmpty() || dentist.getLicense().isEmpty()){
+            throw new BadRequestException("Name, lastname and license must be complete");
+        }
+        else{
+            log.debug("Saving dentist");
+            return dentistRepository.save(dentist);
+        }
     }
 
     @Override
     public Dentist findById(Long id) {
-        return dentistRepository.findById(id).orElse(null);
+        return dentistRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Dentist not found with id " + id));
     }
 
     @Override
@@ -48,12 +53,8 @@ public class DentistServiceImpl implements DentistService {
 
     @Override
     public void delete(Long id) {
-        log.info("Deleting dentist");
+        log.debug("Deleting dentist");
         dentistRepository.deleteById(id);
     }
 
-    @Override
-    public Dentist getReferenceById(Long id) {
-        return dentistRepository.getReferenceById(id);
-    }
 }

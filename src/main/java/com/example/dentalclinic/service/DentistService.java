@@ -14,6 +14,5 @@ public interface DentistService {
     List<Dentist> findAll();
     Dentist update(Dentist dentist);
     void delete(Long id);
-    Dentist getReferenceById(Long id);
 
 }

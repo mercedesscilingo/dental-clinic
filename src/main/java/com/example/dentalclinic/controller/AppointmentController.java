@@ -4,12 +4,14 @@ import com.example.dentalclinic.controller.dto.AppointmentDto;
 import com.example.dentalclinic.controller.dto.AppointmentRegistrationDto;
 import com.example.dentalclinic.controller.dto.Mapper;
 import com.example.dentalclinic.entity.Appointment;
-import com.example.dentalclinic.exceptions.BadRequestException;
+
 import com.example.dentalclinic.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +23,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppointmentController {
 
-    private final AppointmentService appointmentService;
+    @Autowired
+    private AppointmentService appointmentService;
 
     private final Mapper mapper;
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping()
-    public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentRegistrationDto appointmentRegistrationDto) throws BadRequestException {
+    public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentRegistrationDto appointmentRegistrationDto){
+
         Appointment appointment = mapper.toAppointment(appointmentRegistrationDto) ;
         AppointmentDto response = mapper.toAppointmentDto(appointmentService.save(appointment));
 
@@ -41,7 +45,7 @@ public class AppointmentController {
 
         return ResponseEntity.ok(response);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<AppointmentDto>> findAll(){
         return ResponseEntity.ok(appointmentService.findAll().stream().map(a -> mapper.toAppointmentDto(a)).toList());

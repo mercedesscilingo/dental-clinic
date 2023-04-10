@@ -12,5 +12,4 @@ public interface PatientService {
     List<Patient> findAll();
     Patient update(Patient patient);
     void delete(Long id);
-    Patient getReferenceById(Long id);
 }

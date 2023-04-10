@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class DentistController {
     private final DentistService dentistService;
     private final Mapper mapper;
 
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<DentistDto> save(@RequestBody DentistDto dentistDto) {
 
@@ -44,7 +45,7 @@ public class DentistController {
 
         return ResponseEntity.ok(response);
     }
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<DentistDto>> findAll(){
 

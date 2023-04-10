@@ -29,22 +29,18 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment save(Appointment appointment) {
 
-        if(patientRepository.findById(appointment.getPatient().getId()).isPresent() &&
-                dentistRepository.findById(appointment.getDentist().getId()).isPresent()){
+        appointment.setPatient(patientRepository.findById(appointment.getPatient().getId())
+                .orElseThrow(()->new ResourceNotFoundException("Patient not found")));
+        appointment.setDentist(dentistRepository.findById(appointment.getDentist().getId())
+                .orElseThrow(()->new ResourceNotFoundException("Dentist not found")));
 
-            appointment.setPatient(patientRepository.getReferenceById(appointment.getPatient().getId()));
-            appointment.setDentist(dentistRepository.getReferenceById(appointment.getDentist().getId()));
-
-            return appointmentRepository.save(appointment);
-        }
-        else
-            throw new BadRequestException("Patient or dentist do not exist");
+        return appointmentRepository.save(appointment);
 
     }
 
     @Override
     public Appointment findById(Long id) {
-        return appointmentRepository.findById(id).orElse(null);
+        return appointmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id " + id));
     }
 
     @Override

@@ -27,8 +27,8 @@ public class GlobalExceptionHandler {
 
        return errorMessage;
     }
-
-    @ExceptionHandler({BadRequestException.class, NumberFormatException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({BadRequestException.class, NumberFormatException.class, NullPointerException.class})
     @ResponseBody
     public ErrorMessage badRequestError(HttpServletRequest request, Exception ex) {
 
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 
         return errorMessage;
     }
-
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public  ErrorMessage internalServerError(HttpServletRequest request, Exception ex){

@@ -10,6 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class PatientController {
     private final PatientService patientService;
 
     private final Mapper mapper;
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<PatientDto> save(@RequestBody PatientDto patientDto) {
         Patient patient = mapper.toPatient(patientDto);
@@ -41,7 +42,7 @@ public class PatientController {
         return ResponseEntity.ok(response);
     }
 
-
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<PatientDto>> findAll(){
         List<Patient> patients = patientService.findAll();
