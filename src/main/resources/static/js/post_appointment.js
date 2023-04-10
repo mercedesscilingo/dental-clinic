@@ -49,10 +49,12 @@ window.addEventListener('load', async function () {
         };
 
         const url = 'http://localhost:8080/appointments';
+        const token = localStorage.getItem('jwt');
         const settings = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify(formData)
         }

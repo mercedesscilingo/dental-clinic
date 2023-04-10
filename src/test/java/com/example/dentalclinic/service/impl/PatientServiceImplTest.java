@@ -12,10 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 import java.util.List;
 
-
 import static org.junit.jupiter.api.Assertions.*;
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class PatientServiceImplTest {
 

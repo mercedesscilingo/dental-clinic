@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class PatientServiceImpl implements PatientService {
-    private final PatientRepository patientRepository;
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Override
     public Patient save(Patient patient) {
@@ -46,8 +48,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient update(Patient patient) {
 
-        if (patient.getId() != null && patientRepository.existsById(patient.getId()))
+        if (patient.getId() != null && patientRepository.existsById(patient.getId())){
+            log.debug("Updating patient");
             return patientRepository.save(patient);
+        }
         else
             throw new ResourceNotFoundException("There is no patient with id " + patient.getId());
     }

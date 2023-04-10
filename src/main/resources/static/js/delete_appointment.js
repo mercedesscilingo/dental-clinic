@@ -1,5 +1,6 @@
 function deleteBy(id){
 
+
     const url = '/appointments/'+ id;
 
     const settings = {
@@ -7,7 +8,9 @@ function deleteBy(id){
         }
 
     fetch(url,settings)
-        .then(response => response.json())
+        .then(response => {
+            console.log("Deleting appointment");
+        })
 
     let row_id = "#tr_" + id;
 

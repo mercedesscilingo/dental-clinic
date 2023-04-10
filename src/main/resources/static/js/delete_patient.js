@@ -7,7 +7,9 @@ function deleteBy(id){
         }
 
     fetch(url,settings)
-        .then(response => response.json())
+        .then(response => {
+            console.log("Deleting patient");
+        })
 
     let row_id = "#tr_" + id;
 

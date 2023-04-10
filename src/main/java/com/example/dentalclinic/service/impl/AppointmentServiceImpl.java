@@ -11,6 +11,7 @@ import com.example.dentalclinic.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +22,12 @@ import java.util.Optional;
 @Slf4j
 public class AppointmentServiceImpl implements AppointmentService {
 
-    private final AppointmentRepository appointmentRepository;
-    private final PatientRepository patientRepository;
-    private final DentistRepository dentistRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+    @Autowired
+    private PatientRepository patientRepository;
+    @Autowired
+    private DentistRepository dentistRepository;
 
 
     @Override
@@ -34,8 +38,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setDentist(dentistRepository.findById(appointment.getDentist().getId())
                 .orElseThrow(()->new ResourceNotFoundException("Dentist not found")));
 
-        return appointmentRepository.save(appointment);
+        log.debug("Saving appointment");
 
+        return appointmentRepository.save(appointment);
     }
 
     @Override
@@ -51,14 +56,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment update(Appointment appointment){
 
-        if (appointment.getId() != null && appointmentRepository.existsById(appointment.getId()))
+        if (appointment.getId() != null && appointmentRepository.existsById(appointment.getId())){
+            log.debug("Updating appointment");
             return appointmentRepository.save(appointment);
+        }
         else
             throw new ResourceNotFoundException("There is no appointment with id " + appointment.getId());
     }
 
     @Override
     public void delete(Long id) {
+        log.debug("Deleting appointment");
         appointmentRepository.deleteById(id);
     }
 }

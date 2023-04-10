@@ -8,6 +8,7 @@ import com.example.dentalclinic.service.DentistService;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +19,14 @@ import java.util.List;
 @Slf4j
 public class DentistServiceImpl implements DentistService {
 
-    private final DentistRepository dentistRepository;
+    @Autowired
+    private DentistRepository dentistRepository;
 
 
     @Override
     public Dentist save(Dentist dentist) {
         if(dentist.getName().isEmpty() || dentist.getLastname().isEmpty() || dentist.getLicense().isEmpty()){
-            throw new BadRequestException("Name, lastname and license must be complete");
+            throw new BadRequestException("Dentist name, lastname and license must be complete");
         }
         else{
             log.debug("Saving dentist");
@@ -45,8 +47,11 @@ public class DentistServiceImpl implements DentistService {
     @Override
     public Dentist update(Dentist dentist){
 
-        if (dentist.getId() != null && dentistRepository.existsById(dentist.getId()))
+        if (dentist.getId() != null && dentistRepository.existsById(dentist.getId())){
+            log.debug("Updating dentist");
             return dentistRepository.save(dentist);
+        }
+
         else
             throw new ResourceNotFoundException("The dentist does not exist");
     }

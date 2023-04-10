@@ -55,7 +55,7 @@ window.addEventListener('load', function () {
 
   (function(){
     let pathname = window.location.pathname;
-    if (pathname == "/dentistList.html") {
+    if (pathname == "./dentistList.html") {
         document.querySelector(".nav .nav-item a:last").addClass("active");
     }
   })

@@ -8,6 +8,8 @@ import com.example.dentalclinic.service.DentistService;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -20,12 +22,14 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/dentists")
 @RequiredArgsConstructor
+@Slf4j
 public class DentistController {
 
-    private final DentistService dentistService;
-    private final Mapper mapper;
+    @Autowired
+    private DentistService dentistService;
+    @Autowired
+    private Mapper mapper;
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<DentistDto> save(@RequestBody DentistDto dentistDto) {
 
@@ -45,7 +49,7 @@ public class DentistController {
 
         return ResponseEntity.ok(response);
     }
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+
     @GetMapping
     public ResponseEntity<List<DentistDto>> findAll(){
 
@@ -61,11 +65,11 @@ public class DentistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable String id) {
 
-        dentistService.delete(id);
+        dentistService.delete(Long.parseLong(id));
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The dentist has been removed");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 

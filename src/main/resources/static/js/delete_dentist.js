@@ -7,11 +7,12 @@ function deleteBy(id){
         }
 
     fetch(url,settings)
-        .then(response => response.json())
+        .then(response => {
+            console.log("Deleting dentist");
+        })
 
     let row_id = "#tr_" + id;
 
     document.querySelector(row_id).remove();
     document.querySelector("#div_odontologo_updating").style.display = "none";
-
 }

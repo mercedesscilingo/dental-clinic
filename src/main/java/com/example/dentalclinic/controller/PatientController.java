@@ -8,11 +8,14 @@ import com.example.dentalclinic.service.PatientService;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -23,10 +26,11 @@ import java.util.List;
 public class PatientController {
 
 
-    private final PatientService patientService;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private Mapper mapper;
 
-    private final Mapper mapper;
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<PatientDto> save(@RequestBody PatientDto patientDto) {
         Patient patient = mapper.toPatient(patientDto);
@@ -42,7 +46,6 @@ public class PatientController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public ResponseEntity<List<PatientDto>> findAll(){
         List<Patient> patients = patientService.findAll();
@@ -61,14 +64,11 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) throws ResourceNotFoundException{ //TODO: remover exception?
+    public ResponseEntity<?> delete(@PathVariable String id) {
 
         patientService.delete(Long.parseLong(id));
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient has been removed");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
-
 
 }

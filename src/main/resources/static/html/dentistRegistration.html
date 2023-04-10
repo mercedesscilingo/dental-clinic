@@ -8,33 +8,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./js/post_appointment.js"></script>
+    <script type="text/javascript" src="../js/post_dentist.js"></script>
 </head>
 <body>
 <div class="container">
     <ul class="nav nav-pills">
         <li class="nav-item">
-            <a class="nav-link" href="/appointmentList.html">Listar Turnos</a>
+            <a class="nav-link" href="./dentistList.html">Listar Odontólogos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./home.html">Home</a>
         </li>
     </ul>
     <div class="row">
         <div class="col-sm-7" style="background-color:#e6fffa; padding:10px; border-radius:3px">
-            <h3>Agregar turno</h3>
-            <form id="add_new_appointment">
+            <h3>Agregar odontólogo</h3>
+            <form id="add_new_odontologo">
                 <div class="form-group">
-                    <label class="control-label" for="fecha">Fecha:</label>
-                    <input type="date" class="form-control" id="fecha"
-                           placeholder="Ingrese la fecha"
-                           name="fecha" required></input>
+                    <label class="control-label" for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre"
+                           placeholder="Ingrese el nombre"
+                           name="nombre" required></input>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="patient">Paciente:</label>
-                    <select name="patient" id="patient"></select>
+                    <label class="control-label" for="apellido">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido"
+                           placeholder="Ingrese el apellido"
+                           name="apellido" required></input>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="dentist">Odontólogo:</label>
-                    <select name="dentist" id="dentist"></select>
+                    <label class="control-label" for="matricula">Matrícula:</label>
+                    <input type="text" class="form-control" id="matricula"
+                           placeholder="Ingrese la matrícula"
+                           name="matricula" required></input>
                 </div>
 
 

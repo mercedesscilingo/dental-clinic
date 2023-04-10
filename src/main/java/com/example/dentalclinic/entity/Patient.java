@@ -12,7 +12,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +19,8 @@ public class Patient {
     private String name;
     private String lastname;
     private String document;
-    private LocalDate admissionDate;
+    @Column(name = "admission_date")
+    private LocalDate admissionDate = LocalDate.now();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;

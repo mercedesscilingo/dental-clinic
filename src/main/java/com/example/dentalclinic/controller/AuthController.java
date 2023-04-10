@@ -4,6 +4,7 @@ import com.example.dentalclinic.controller.dto.AuthRequestDto;
 import com.example.dentalclinic.exceptions.BadRequestException;
 import com.example.dentalclinic.jwt.JwtUtils;
 import com.example.dentalclinic.service.impl.UserDetailsServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
     @Autowired

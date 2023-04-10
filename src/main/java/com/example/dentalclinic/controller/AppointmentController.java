@@ -25,8 +25,10 @@ public class AppointmentController {
 
     @Autowired
     private AppointmentService appointmentService;
+    @Autowired
+    private Mapper mapper;
 
-    private final Mapper mapper;
+
     @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<AppointmentDto> save(@RequestBody AppointmentRegistrationDto appointmentRegistrationDto){
@@ -45,7 +47,7 @@ public class AppointmentController {
 
         return ResponseEntity.ok(response);
     }
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+
     @GetMapping
     public ResponseEntity<List<AppointmentDto>> findAll(){
         return ResponseEntity.ok(appointmentService.findAll().stream().map(a -> mapper.toAppointmentDto(a)).toList());
@@ -61,11 +63,11 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) { //TODO: remover exception? aca tb paso string id y parseo? este metodo debe ser void?
+    public ResponseEntity<?> delete(@PathVariable String id) {
 
-        appointmentService.delete(id);
+        appointmentService.delete(Long.parseLong(id));
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The appointment has been removed");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 

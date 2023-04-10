@@ -9,23 +9,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="./js/post_dentist.js"></script>
+    <script type="text/javascript" src="./js/login.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" href="/dentistList.html">Listado de Odontólogos</a>
-                <a class="nav-link" href="/dentistRegistration.html">Registrar Odontólogo</a>
-                <a class="nav-link" href="/patientList.html">Listado de Pacientes</a>
-                <a class="nav-link" href="/patientRegistration.html">Registrar Paciente</a>
-                <a class="nav-link" href="/appointmentList.html">Listado de Turnos</a>
-                <a class="nav-link" href="/appointmentRegistration.html">Registrar Turno</a>
-            </li>
-        </ul>
-     <hr>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7" style="background-color:#e6fffa; padding:10px; border-radius:3px">
+            <h2>Login</h2>
+            <form id = "login_form">
+                <label class="control-label" for="username">Username:</label>
+                <input type="text" class="form-control" id="username"
+                       placeholder="Ingrese su usuario" name="username" required><br><br>
+                <label class="control-label" for="password">Password:</label>
+                <input type="password" class="form-control" id="password"
+                       placeholder="Ingrese su contraseña" name="password" required><br><br>
+
+                <button type="submit" class="btn btn-danger" id="btn-login">Login</button>
+            </form>
+            <div id="response" style="display:none; margin-top:10px">
+            </div>
+        </div>
     </div>
+</div>
+
 </body>
 
 </html>
+

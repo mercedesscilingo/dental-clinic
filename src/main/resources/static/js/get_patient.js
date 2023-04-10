@@ -67,7 +67,7 @@ window.addEventListener('load', function () {
 
    (function(){
      let pathname = window.location.pathname;
-     if (pathname == "/patientList.html") {
+     if (pathname == "./patientList.html") {
          document.querySelector(".nav .nav-item a:last").addClass("active");
      }
    })
