@@ -29,7 +29,7 @@ public class DentistServiceImpl implements DentistService {
             throw new BadRequestException("Dentist name, lastname and license must be complete");
         }
         else{
-            log.debug("Saving dentist");
+            log.info("Saving dentist");
             return dentistRepository.save(dentist);
         }
     }
@@ -48,17 +48,18 @@ public class DentistServiceImpl implements DentistService {
     public Dentist update(Dentist dentist){
 
         if (dentist.getId() != null && dentistRepository.existsById(dentist.getId())){
-            log.debug("Updating dentist");
+            log.info("Updating dentist");
             return dentistRepository.save(dentist);
         }
 
         else
+            log.error("The dentist does not exist");
             throw new ResourceNotFoundException("The dentist does not exist");
     }
 
     @Override
     public void delete(Long id) {
-        log.debug("Deleting dentist");
+        log.info("Deleting dentist");
         dentistRepository.deleteById(id);
     }
 

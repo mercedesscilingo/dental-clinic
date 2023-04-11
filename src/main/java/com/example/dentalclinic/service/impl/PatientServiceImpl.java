@@ -26,10 +26,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient save(Patient patient) {
         if (patient.getName() == null || patient.getLastname() == null || patient.getDocument() == null ) {
+            log.error("Patient name, lastname or document invalid");
             throw new BadRequestException("Error, patient name, lastname and document must be complete");
         }
         else {
-            log.debug("Saving patient");
+            log.info("Saving patient");
             patient.setAdmissionDate(LocalDate.now());
             return patientRepository.save(patient);
         }
@@ -49,7 +50,7 @@ public class PatientServiceImpl implements PatientService {
     public Patient update(Patient patient) {
 
         if (patient.getId() != null && patientRepository.existsById(patient.getId())){
-            log.debug("Updating patient");
+            log.info("Updating patient");
             return patientRepository.save(patient);
         }
         else
@@ -58,7 +59,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delete(Long id) {
-        log.debug("Deleting patient");
+        log.info("Deleting patient");
         patientRepository.deleteById(id);
     }
 

@@ -4,8 +4,6 @@ import com.example.dentalclinic.entity.Address;
 import com.example.dentalclinic.entity.Appointment;
 import com.example.dentalclinic.entity.Dentist;
 import com.example.dentalclinic.entity.Patient;
-import com.example.dentalclinic.repository.DentistRepository;
-import com.example.dentalclinic.repository.PatientRepository;
 import com.example.dentalclinic.service.AppointmentService;
 import com.example.dentalclinic.service.DentistService;
 import com.example.dentalclinic.service.PatientService;

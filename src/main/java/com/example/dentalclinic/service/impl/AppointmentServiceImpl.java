@@ -38,7 +38,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setDentist(dentistRepository.findById(appointment.getDentist().getId())
                 .orElseThrow(()->new ResourceNotFoundException("Dentist not found")));
 
-        log.debug("Saving appointment");
+        log.info("Saving appointment");
 
         return appointmentRepository.save(appointment);
     }
@@ -57,16 +57,17 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment update(Appointment appointment){
 
         if (appointment.getId() != null && appointmentRepository.existsById(appointment.getId())){
-            log.debug("Updating appointment");
+            log.info("Updating appointment");
             return appointmentRepository.save(appointment);
         }
         else
+            log.error("Appointment not exists");
             throw new ResourceNotFoundException("There is no appointment with id " + appointment.getId());
     }
 
     @Override
     public void delete(Long id) {
-        log.debug("Deleting appointment");
+        log.info("Deleting appointment");
         appointmentRepository.deleteById(id);
     }
 }
