@@ -67,8 +67,12 @@ class PatientServiceImplTest {
     @Test
     @Order(5)
     public void deletedPatientTest(){
-        patientService.delete(1L);
-        assertNull(patientService.findById(1L));
+        Long id = 1L;
+
+        patientService.delete(id);
+
+        assertThrows(ResourceNotFoundException.class, ()->patientService.findById(1L));
+
     }
 
     @Test

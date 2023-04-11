@@ -25,7 +25,7 @@ public class DentistServiceImpl implements DentistService {
 
     @Override
     public Dentist save(Dentist dentist) {
-        if(dentist.getName().isEmpty() || dentist.getLastname().isEmpty() || dentist.getLicense().isEmpty()){
+        if(dentist.getName() == null || dentist.getLastname() == null|| dentist.getLicense() == null){
             throw new BadRequestException("Dentist name, lastname and license must be complete");
         }
         else{
